@@ -1,11 +1,8 @@
 import logging
-import os
 import re
 from string import Template
 from typing import Any, Mapping, Optional
-
 from embedchain.config.base_config import BaseConfig
-from embedchain.core.db.database import init_db, setup_engine
 from embedchain.helpers.json_serializable import register_deserializable
 
 
@@ -170,11 +167,6 @@ class BaseLlmConfig(BaseConfig):
 
         if prompt is None:
             prompt = DEFAULT_PROMPT_TEMPLATE
-
-        # Initialize the metadata db for the app here since llmfactory needs it for initialization of
-        # the llm memory
-        setup_engine(database_uri=os.environ.get("EMBEDCHAIN_DB_URI"))
-        init_db()
 
         self.number_documents = number_documents
         self.temperature = temperature
